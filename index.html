@@ -966,8 +966,8 @@ body{font-weight:500;font-size:18px;}
   box-shadow:0 18px 44px rgba(109,58,76,.20),0 2px 8px rgba(109,58,76,.10);
 }
 .ph-inner img{
-  display:block;width:100%;height:auto;aspect-ratio:2/2.72;object-fit:cover;
-  object-position:center 22%;
+  display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:contain;
+  object-position:center;background:#fdf3f4;
 }
 /* velo rose gold muy leve para amarrarla a la paleta */
 .ph-inner::after{
@@ -1004,8 +1004,8 @@ body{font-weight:500;font-size:18px;}
 }
 .wheel-ring.dragging{cursor:grabbing;}
 .wheel-card{
-  position:absolute;width:160px;height:224px;left:50%;top:50%;
-  margin-left:-80px;margin-top:-112px;
+  position:absolute;width:158px;height:237px;left:50%;top:50%;
+  margin-left:-79px;margin-top:-118.5px;
   border-radius:14px;overflow:hidden;
   border:2px solid rgba(183,110,121,.34);
   box-shadow:0 12px 36px rgba(109,58,76,.24);
@@ -1014,7 +1014,7 @@ body{font-weight:500;font-size:18px;}
 }
 .wheel-card img{
   width:100%;height:100%;object-fit:cover;object-position:center;
-  display:block;pointer-events:none;
+  display:block;pointer-events:none;background:#fdf3f4;
 }
 .wgal-hint{
   text-align:center;margin-top:16px;
@@ -1023,9 +1023,47 @@ body{font-weight:500;font-size:18px;}
   color:var(--dark);opacity:.68;
 }
 @media(min-width:420px){
-  .wheel-scene{height:470px;}
-  .wheel-card{width:184px;height:258px;margin-left:-92px;margin-top:-129px;}
+  .wheel-scene{height:490px;}
+  .wheel-card{width:180px;height:270px;margin-left:-90px;margin-top:-135px;}
 }
+/* ==========================================================================
+   LEVITACION — las fotos flotan suavemente y su sombra "respira" con ellas.
+   La animacion vive en .ph-inner para no pelearse con el reveal de GSAP,
+   que anima el transform del .ph contenedor.
+   ========================================================================== */
+@keyframes phFloat{
+  0%,100%{transform:translateY(0) rotate(-.35deg);}
+  50%    {transform:translateY(-13px) rotate(.35deg);}
+}
+@keyframes phShadow{
+  0%,100%{transform:translateX(-50%) scaleX(1);opacity:.30;}
+  50%    {transform:translateX(-50%) scaleX(.80);opacity:.15;}
+}
+.ph-inner{
+  animation:phFloat 6.2s ease-in-out infinite;
+  z-index:1;
+}
+/* sombra proyectada en el suelo, aparte de la de la foto */
+.ph::after{
+  content:'';position:absolute;left:50%;bottom:22px;
+  width:64%;height:16px;border-radius:50%;z-index:0;
+  background:radial-gradient(ellipse at center,rgba(109,58,76,.34) 0%,rgba(109,58,76,.12) 48%,transparent 74%);
+  filter:blur(7px);
+  animation:phShadow 6.2s ease-in-out infinite;
+}
+/* desfases para que no floten todas al unisono */
+.ph:nth-of-type(2n)   .ph-inner,.ph:nth-of-type(2n)::after  {animation-duration:7.1s;animation-delay:-1.6s;}
+.ph:nth-of-type(3n)   .ph-inner,.ph:nth-of-type(3n)::after  {animation-duration:5.6s;animation-delay:-3.1s;}
+#ph-ancha .ph-inner,#ph-ancha::after{animation-duration:7.8s;animation-delay:-.9s;}
+
+@media (prefers-reduced-motion:reduce){
+  .ph-inner,.ph::after{animation:none !important;}
+}
+
+/* ---- foto panoramica (la que pidio la familia): a lo ancho y completa ---- */
+#ph-ancha{width:92%;max-width:390px;}
+#ph-ancha .ph-inner img{aspect-ratio:3/2;}
+#ph-ancha::after{bottom:26px;width:72%;}
 </style>
 </head>
 <body>
@@ -1125,7 +1163,7 @@ body{font-weight:500;font-size:18px;}
     <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
-    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-intro.jpg" alt="Leticia entre los cerezos en flor" style="object-position:center 18%" loading="lazy"></div>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-intro.jpg?v=2" alt="Leticia entre los cerezos en flor" loading="lazy"></div>
     <span class="ph-cap">Quince primaveras</span>
   </div>
   </section>
@@ -1212,6 +1250,16 @@ body{font-weight:500;font-size:18px;}
     </svg>
   </div>
 
+
+  <div class="ph rv" id="ph-ancha">
+    <svg class="ph-corner ph-c-tl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-ancha.jpg" alt="Leticia sentada en las escaleras bajo los cerezos en flor" loading="lazy"></div>
+    <span class="ph-cap">Bajo los cerezos</span>
+  </div>
+
   <!-- UBICACION — Dos venues distintos -->
   <section id="subic" class="bgsec">
     <div class="eyebrow eyebrow-gold rv">D&oacute;nde celebraremos</div>
@@ -1286,7 +1334,7 @@ body{font-weight:500;font-size:18px;}
     <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
-    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-vestido.jpg" alt="Detalle del vestido de Leticia" style="object-position:center 26%" loading="lazy"></div>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-vestido.jpg?v=2" alt="Detalle del vestido de Leticia" loading="lazy"></div>
     <span class="ph-cap">El gran d&iacute;a</span>
   </div>
 
@@ -1387,7 +1435,7 @@ body{font-weight:500;font-size:18px;}
     <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
-    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-familia.jpg" alt="Leticia bajo los cerezos" style="object-position:center 20%" loading="lazy"></div>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-familia.jpg?v=2" alt="Leticia bajo los cerezos" loading="lazy"></div>
     <span class="ph-cap">Con su bendici&oacute;n</span>
   </div>
     <div class="fam2">
@@ -1529,12 +1577,12 @@ body{font-weight:500;font-size:18px;}
     <h2 class="sec-title rv">Mi Sesi&oacute;n</h2>
     <div class="wheel-scene rv" id="wheel-scene">
       <div class="wheel-ring" id="wheel-ring">
-          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-1.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
-          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-2.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
-          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-3.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
-          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-4.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
-          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-5.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
-          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-6.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-1.jpg?v=2" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-2.jpg?v=2" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-3.jpg?v=2" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-4.jpg?v=2" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-5.jpg?v=2" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-6.jpg?v=2" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
       </div>
     </div>
     <p class="wgal-hint">Arrastra para girar</p>
@@ -1608,7 +1656,7 @@ body{font-weight:500;font-size:18px;}
     <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
-    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-cierre.jpg" alt="Leticia sentada bajo el cerezo en flor" style="object-position:center 30%" loading="lazy"></div>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-cierre.jpg?v=2" alt="Leticia sentada bajo el cerezo en flor" loading="lazy"></div>
     <span class="ph-cap">Te espero</span>
   </div>
 
@@ -2150,7 +2198,7 @@ function initWheelGallery(){
 
   function layout(){
     var w=window.innerWidth;
-    var cardW=w<420?160:184;
+    var cardW=w<420?158:180;
     /* radio que evita que las tarjetas se encimen, con holgura */
     radius=Math.round((cardW/2)/Math.tan(Math.PI/n)*1.08);
     cards.forEach(function(c,i){
