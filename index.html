@@ -984,6 +984,7 @@ body{font-weight:500;font-size:18px;}
 .ph-c-tr{top:0;right:0;transform:scaleX(-1);}
 .ph-c-bl{bottom:0;left:0;transform:scaleY(-1);}
 .ph-c-br{bottom:0;right:0;transform:scale(-1,-1);}
+/* (el transform de espejo se repite dentro de cada keyframe phFloat*) */
 .ph-cap{
   display:block;text-align:center;margin-top:14px;
   font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
@@ -1032,9 +1033,19 @@ body{font-weight:500;font-size:18px;}
    que anima el transform del .ph contenedor.
    ========================================================================== */
 @keyframes phFloat{
-  0%,100%{transform:translateY(0) rotate(-.35deg);}
-  50%    {transform:translateY(-13px) rotate(.35deg);}
+  0%,100%{transform:translateY(0);}
+  50%    {transform:translateY(-13px);}
 }
+/* las esquinas suben lo mismo, pero cada una conserva su espejo */
+@keyframes phFloatTL{0%,100%{transform:translateY(0);}                50%{transform:translateY(-13px);}}
+@keyframes phFloatTR{0%,100%{transform:scaleX(-1) translateY(0);}     50%{transform:scaleX(-1) translateY(-13px);}}
+@keyframes phFloatBL{0%,100%{transform:scaleY(-1) translateY(0);}     50%{transform:scaleY(-1) translateY(13px);}}
+@keyframes phFloatBR{0%,100%{transform:scale(-1,-1) translateY(0);}   50%{transform:scale(-1,-1) translateY(13px);}}
+.ph-corner{animation:phFloat 6.2s ease-in-out infinite;}
+.ph-c-tl{animation-name:phFloatTL;}
+.ph-c-tr{animation-name:phFloatTR;}
+.ph-c-bl{animation-name:phFloatBL;}
+.ph-c-br{animation-name:phFloatBR;}
 @keyframes phShadow{
   0%,100%{transform:translateX(-50%) scaleX(1);opacity:.30;}
   50%    {transform:translateX(-50%) scaleX(.80);opacity:.15;}
@@ -1052,12 +1063,12 @@ body{font-weight:500;font-size:18px;}
   animation:phShadow 6.2s ease-in-out infinite;
 }
 /* desfases para que no floten todas al unisono */
-.ph:nth-of-type(2n)   .ph-inner,.ph:nth-of-type(2n)::after  {animation-duration:7.1s;animation-delay:-1.6s;}
-.ph:nth-of-type(3n)   .ph-inner,.ph:nth-of-type(3n)::after  {animation-duration:5.6s;animation-delay:-3.1s;}
-#ph-ancha .ph-inner,#ph-ancha::after{animation-duration:7.8s;animation-delay:-.9s;}
+.ph:nth-of-type(2n) .ph-inner,.ph:nth-of-type(2n) .ph-corner,.ph:nth-of-type(2n)::after{animation-duration:7.1s;animation-delay:-1.6s;}
+.ph:nth-of-type(3n) .ph-inner,.ph:nth-of-type(3n) .ph-corner,.ph:nth-of-type(3n)::after{animation-duration:5.6s;animation-delay:-3.1s;}
+#ph-ancha .ph-inner,#ph-ancha .ph-corner,#ph-ancha::after{animation-duration:7.8s;animation-delay:-.9s;}
 
 @media (prefers-reduced-motion:reduce){
-  .ph-inner,.ph::after{animation:none !important;}
+  .ph-inner,.ph-corner,.ph::after{animation:none !important;}
 }
 
 /* ---- foto panoramica (la que pidio la familia): a lo ancho y completa ---- */
