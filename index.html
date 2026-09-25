@@ -8,7 +8,7 @@
 <meta property="og:title" content="XV A&ntilde;os de Leticia &middot; 7 Noviembre 2026">
 <meta property="og:description" content="El honor de tu presencia &middot; Easton, Maryland &middot; 7 de Noviembre de 2026">
 <meta property="og:url" content="https://xv-leticia.vercel.app">
-<meta property="og:image" content="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/og-image.jpg">
+<meta property="og:image" content="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/og-image.jpg?v=2">
 <meta property="og:image:alt" content="XV A&ntilde;os Leticia">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -932,14 +932,108 @@ body{font-weight:500;font-size:18px;}
 .fd{font-size:14px !important;font-weight:500 !important;}
 #rsvp-feedback{font-size:16px !important;font-weight:500 !important;}
 #rsvp-pases-note{font-size:16px !important;font-weight:500 !important;}
+/* ==========================================================================
+   FONDOS POR SECCION — acuarelas florales heredadas de XV anteriores
+   (xv-itzel/fondo-gracia y los 3 bg-floral de xv-layla-y-litzy).
+   Van en un ::before propio con mascara radial, para que el centro quede
+   limpio y el texto conserve su contraste.
+   ========================================================================== */
+.bgsec{position:relative;isolation:isolate;}
+.bgsec::before{
+  content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+  opacity:.5;
+  -webkit-mask-image:radial-gradient(ellipse 88% 70% at 50% 50%,transparent 4%,rgba(0,0,0,.55) 46%,#000 72%),
+                     linear-gradient(to bottom,transparent 0%,#000 14%,#000 86%,transparent 100%);
+  mask-image:radial-gradient(ellipse 88% 70% at 50% 50%,transparent 4%,rgba(0,0,0,.55) 46%,#000 72%),
+             linear-gradient(to bottom,transparent 0%,#000 14%,#000 86%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+}
+#sintro.bgsec::before{background-image:url('https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/bg-intro.jpg');opacity:.55;}
+#subic.bgsec::before{background-image:url('https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/bg-ubicacion.jpg');opacity:.48;}
+#sfam.bgsec::before{background-image:url('https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/bg-familia.jpg');opacity:.45;}
+#srsvp.bgsec::before{background-image:url('https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/bg-rsvp.jpg');opacity:.42;}
+
+/* ==========================================================================
+   FOTOS INTERCALADAS — retrato enmarcado, esquinas doradas, entra con scroll
+   ========================================================================== */
+.ph{
+  position:relative;width:78%;max-width:300px;margin:6px auto 4px;
+  padding:11px;
+}
+.ph-inner{
+  position:relative;overflow:hidden;border-radius:4px;
+  box-shadow:0 18px 44px rgba(109,58,76,.20),0 2px 8px rgba(109,58,76,.10);
+}
+.ph-inner img{
+  display:block;width:100%;height:auto;aspect-ratio:2/2.72;object-fit:cover;
+  object-position:center 22%;
+}
+/* velo rose gold muy leve para amarrarla a la paleta */
+.ph-inner::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(170deg,rgba(255,222,226,.16) 0%,transparent 42%,rgba(183,110,121,.10) 100%);
+}
+/* filete interior dorado */
+.ph-inner::before{
+  content:'';position:absolute;inset:7px;z-index:2;pointer-events:none;
+  border:1px solid rgba(255,255,255,.42);
+}
+.ph-corner{position:absolute;width:26px;height:26px;z-index:3;}
+.ph-c-tl{top:0;left:0;}
+.ph-c-tr{top:0;right:0;transform:scaleX(-1);}
+.ph-c-bl{bottom:0;left:0;transform:scaleY(-1);}
+.ph-c-br{bottom:0;right:0;transform:scale(-1,-1);}
+.ph-cap{
+  display:block;text-align:center;margin-top:14px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
+  font-size:14px;letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--dark);opacity:.72;
+}
+
+/* ==========================================================================
+   GALERIA — RUEDA 3D (motor de boda-veronica-y-andres, arrastrable)
+   ========================================================================== */
+.wheel-scene{
+  position:relative;width:100%;height:420px;margin:30px auto 0;
+  perspective:1200px;transform-style:preserve-3d;overflow:visible;
+}
+.wheel-ring{
+  position:absolute;width:100%;height:100%;
+  transform-style:preserve-3d;cursor:grab;
+}
+.wheel-ring.dragging{cursor:grabbing;}
+.wheel-card{
+  position:absolute;width:160px;height:224px;left:50%;top:50%;
+  margin-left:-80px;margin-top:-112px;
+  border-radius:14px;overflow:hidden;
+  border:2px solid rgba(183,110,121,.34);
+  box-shadow:0 12px 36px rgba(109,58,76,.24);
+  user-select:none;-webkit-user-select:none;
+  background:rgba(255,247,247,.6);
+}
+.wheel-card img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  display:block;pointer-events:none;
+}
+.wgal-hint{
+  text-align:center;margin-top:16px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
+  font-size:14px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--dark);opacity:.68;
+}
+@media(min-width:420px){
+  .wheel-scene{height:470px;}
+  .wheel-card{width:184px;height:258px;margin-left:-92px;margin-top:-129px;}
+}
 </style>
 </head>
 <body>
 
 <!-- ENVELOPE -->
 <div id="envelope-screen" role="button" aria-label="Toca para abrir tu invitacion">
-  <img id="env-image" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-daphne/sobre.png" alt="Invitaci&oacute;n Daphne Paola">
-  <video id="env-video" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-daphne/apertura.mp4" playsinline webkit-playsinline muted preload="auto"></video>
+  <img id="env-image" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/sobre.png" alt="Invitaci&oacute;n de Leticia">
+  <video id="env-video" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/apertura.mp4" playsinline webkit-playsinline muted preload="auto"></video>
   <p class="envelope-hint" id="env-hint">Toca para abrir</p>
 </div>
 <div id="env-flash"></div>
@@ -1015,7 +1109,7 @@ body{font-weight:500;font-size:18px;}
   </div>
 
   <!-- INTRO — Frase inicial -->
-  <section style="padding:0;" id="sintro">
+  <section style="padding:0;" id="sintro" class="bgsec">
     <div class="intro-wrap rv">
       <p class="intro-text"><span class="intro-drop">H</span>ay instantes que la vida nos regala una sola vez.
         Con el coraz&oacute;n lleno de gratitud y alegr&iacute;a, el honor de tu presencia se solicita
@@ -1025,6 +1119,15 @@ body{font-weight:500;font-size:18px;}
       </p>
       <span class="intro-firma">Leticia</span>
     </div>
+
+  <div class="ph rv">
+    <svg class="ph-corner ph-c-tl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-intro.jpg" alt="Leticia entre los cerezos en flor" style="object-position:center 18%" loading="lazy"></div>
+    <span class="ph-cap">Quince primaveras</span>
+  </div>
   </section>
 
   <div class="orn rv">
@@ -1110,7 +1213,7 @@ body{font-weight:500;font-size:18px;}
   </div>
 
   <!-- UBICACION — Dos venues distintos -->
-  <section id="subic">
+  <section id="subic" class="bgsec">
     <div class="eyebrow eyebrow-gold rv">D&oacute;nde celebraremos</div>
     <h2 class="sec-title rv">Ubicaci&oacute;n</h2>
     <div class="loc-grid">
@@ -1175,6 +1278,16 @@ body{font-weight:500;font-size:18px;}
       <line x1="204" y1="20" x2="300" y2="20" stroke="#c6a9ad" stroke-width="0.85" opacity="0.34"/>
       <line x1="212" y1="23" x2="300" y2="23" stroke="#c6a9ad" stroke-width="0.38" opacity="0.16"/>
     </svg>
+  </div>
+
+
+  <div class="ph rv">
+    <svg class="ph-corner ph-c-tl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-vestido.jpg" alt="Detalle del vestido de Leticia" style="object-position:center 26%" loading="lazy"></div>
+    <span class="ph-cap">El gran d&iacute;a</span>
   </div>
 
   <!-- ITINERARIO — Cards con iconos ilustrados -->
@@ -1265,9 +1378,18 @@ body{font-weight:500;font-size:18px;}
   </div>
 
   <!-- FAMILIA -->
-  <section id="sfam">
+  <section id="sfam" class="bgsec">
     <div class="eyebrow eyebrow-gold rv">Con la Bendici&oacute;n de</div>
     <h2 class="sec-title rv">Mi Familia</h2>
+
+  <div class="ph rv">
+    <svg class="ph-corner ph-c-tl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-familia.jpg" alt="Leticia bajo los cerezos" style="object-position:center 20%" loading="lazy"></div>
+    <span class="ph-cap">Con su bendici&oacute;n</span>
+  </div>
     <div class="fam2">
 
       <div class="fam2-group rv">
@@ -1400,6 +1522,39 @@ body{font-weight:500;font-size:18px;}
     </svg>
   </div>
 
+
+  <!-- GALERIA — rueda 3D arrastrable -->
+  <section id="sgal">
+    <div class="eyebrow eyebrow-gold rv">Entre Flores de Cerezo</div>
+    <h2 class="sec-title rv">Mi Sesi&oacute;n</h2>
+    <div class="wheel-scene rv" id="wheel-scene">
+      <div class="wheel-ring" id="wheel-ring">
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-1.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-2.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-3.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-4.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-5.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+          <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-6.jpg" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
+      </div>
+    </div>
+    <p class="wgal-hint">Arrastra para girar</p>
+  </section>
+
+  <div class="orn rv">
+    <svg viewBox="0 0 300 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="20" x2="96" y2="20" stroke="#c6a9ad" stroke-width="0.85" opacity="0.34"/>
+      <line x1="0" y1="23" x2="88" y2="23" stroke="#c6a9ad" stroke-width="0.38" opacity="0.16"/>
+      <path d="M96 21.5 Q104 7 116 21.5" stroke="#B76E79" stroke-width="0.95" fill="none" opacity="0.46"/>
+      <path d="M122 21.5 L126.5 15.5 L131 21.5 L126.5 27.5 Z" fill="#ffdee2" fill-opacity="0.40" stroke="#ffdee2" stroke-width="0.4" opacity="0.5"/>
+      <path d="M150 6 L165 21.5 L150 37 L135 21.5 Z" fill="rgba(180,121,142,0.09)" stroke="#B76E79" stroke-width="1.05" opacity="0.50"/>
+      <circle cx="150" cy="21.5" r="4.5" fill="rgba(238,195,199,0.22)" stroke="#B76E79" stroke-width="0.7" opacity="0.58"/>
+      <path d="M169 21.5 L173.5 15.5 L178 21.5 L173.5 27.5 Z" fill="#ffdee2" fill-opacity="0.40" stroke="#ffdee2" stroke-width="0.4" opacity="0.5"/>
+      <path d="M184 21.5 Q196 7 204 21.5" stroke="#B76E79" stroke-width="0.95" fill="none" opacity="0.46"/>
+      <line x1="204" y1="20" x2="300" y2="20" stroke="#c6a9ad" stroke-width="0.85" opacity="0.34"/>
+      <line x1="212" y1="23" x2="300" y2="23" stroke="#c6a9ad" stroke-width="0.38" opacity="0.16"/>
+    </svg>
+  </div>
+
   <!-- ALBUM — OBLIGATORIA -->
   <section class="rv" id="salbum">
     <div class="eyebrow eyebrow-gold rv">Comparte el Momento</div>
@@ -1447,8 +1602,18 @@ body{font-weight:500;font-size:18px;}
     </svg>
   </div>
 
+
+  <div class="ph rv">
+    <svg class="ph-corner ph-c-tl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-tr" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
+    <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-cierre.jpg" alt="Leticia sentada bajo el cerezo en flor" style="object-position:center 30%" loading="lazy"></div>
+    <span class="ph-cap">Te espero</span>
+  </div>
+
   <!-- RSVP -->
-  <section class="rv" id="srsvp">
+  <section class="rv bgsec" id="srsvp">
     <div class="eyebrow eyebrow-silver">Conf&iacute;rmanos tu Asistencia</div>
     <h2 class="sec-title rv">R.S.V.P.</h2>
     <div class="rsvp-card rv">
@@ -1971,6 +2136,68 @@ function initWheelGallery(){
     });
   });
 }
+
+
+/* ===== GALERIA — RUEDA 3D ARRASTRABLE (motor de boda-veronica-y-andres) =====
+   Las imagenes van en data-src: loading="lazy" NO dispara dentro de tarjetas
+   con translateZ, se quedarian en blanco. Las cargamos a mano al entrar. */
+(function(){
+  var ring=document.getElementById('wheel-ring');
+  if(!ring) return;
+  var cards=ring.querySelectorAll('.wheel-card');
+  var n=cards.length; if(!n) return;
+  var rot=0,vel=0,isDrag=false,startX=0,startRot=0,lastX=0,rafId=null,auto=true,radius=0;
+
+  function layout(){
+    var w=window.innerWidth;
+    var cardW=w<420?160:184;
+    /* radio que evita que las tarjetas se encimen, con holgura */
+    radius=Math.round((cardW/2)/Math.tan(Math.PI/n)*1.08);
+    cards.forEach(function(c,i){
+      c.style.transform='rotateY('+(360/n*i)+'deg) translateZ('+radius+'px)';
+    });
+  }
+  layout();
+  var rzT; window.addEventListener('resize',function(){clearTimeout(rzT);rzT=setTimeout(layout,140);},{passive:true});
+
+  function setRot(){ ring.style.transform='rotateY('+rot+'deg)'; }
+  setRot();
+
+  function inertia(){
+    if(isDrag) return;
+    rot+=vel; vel*=0.94; setRot();
+    if(Math.abs(vel)>0.05) rafId=requestAnimationFrame(inertia);
+  }
+  function down(x){ isDrag=true;auto=false;ring.classList.add('dragging');
+    startX=x;lastX=x;startRot=rot;vel=0; if(rafId)cancelAnimationFrame(rafId); }
+  function move(x){ if(!isDrag)return; rot=startRot+(x-startX)*0.45; vel=(x-lastX)*0.5; lastX=x; setRot(); }
+  function up(){ if(!isDrag)return; isDrag=false;ring.classList.remove('dragging');rafId=requestAnimationFrame(inertia); }
+
+  ring.addEventListener('mousedown',function(e){e.preventDefault();down(e.clientX);});
+  window.addEventListener('mousemove',function(e){move(e.clientX);});
+  window.addEventListener('mouseup',up);
+  ring.addEventListener('touchstart',function(e){down(e.touches[0].clientX);},{passive:true});
+  ring.addEventListener('touchmove',function(e){move(e.touches[0].clientX);},{passive:true});
+  ring.addEventListener('touchend',up);
+
+  /* giro lento hasta el primer arrastre */
+  (function spin(){ if(auto&&!isDrag){rot+=0.12;setRot();} requestAnimationFrame(spin); })();
+
+  /* carga de imagenes: al acercarse la seccion, y como red de seguridad a los 4s
+     (el ScrollTrigger puede no llegar a disparar) */
+  var loaded=false;
+  function loadImgs(){
+    if(loaded)return; loaded=true;
+    cards.forEach(function(c){
+      var img=c.querySelector('img');
+      if(img&&img.dataset.src){img.src=img.dataset.src;img.removeAttribute('data-src');}
+    });
+  }
+  if(window.ScrollTrigger){
+    ScrollTrigger.create({trigger:'#sgal',start:'top 140%',once:true,onEnter:loadImgs});
+  }
+  setTimeout(loadImgs,4000);
+})();
 
 /* LIGHTBOX */
 (function(){
