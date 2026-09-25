@@ -850,6 +850,62 @@ footer .credit a{color:inherit;text-decoration:none;}
   pointer-events:none;z-index:40;opacity:0;
 }
 @media (prefers-reduced-motion:reduce){#sakura-canvas{display:none;}}
+/* ==========================================================================
+   LEGIBILIDAD — invitados de todas las edades (min 16px, peso >=500,
+   contraste >=4.5:1 en todo dato informativo). Solo sube peso/tamano/
+   opacidad; no cambia la paleta ni el layout del template.
+   ========================================================================== */
+body{font-weight:500;font-size:18px;}
+
+/* Hero: fecha y ciudad son datos criticos */
+.hero-date-text{font-size:15px !important;font-weight:600 !important;letter-spacing:4.5px !important;}
+.hero-city{font-size:16px !important;font-weight:500 !important;opacity:.95 !important;color:var(--dark) !important;}
+.hero-eyebrow{font-size:12px !important;font-weight:600 !important;}
+
+/* Contador */
+.cd2-lbl{font-size:12px !important;font-weight:600 !important;opacity:.92 !important;color:var(--dark) !important;}
+.cd2-quote p{font-size:17px !important;font-weight:500 !important;opacity:.82 !important;}
+
+/* Ubicacion: direccion y hora — lo mas importante de la invitacion */
+.loc1-label{font-size:12px !important;font-weight:600 !important;letter-spacing:3.5px !important;}
+.loc1-addr{
+  font-size:18px !important;font-weight:500 !important;line-height:1.55 !important;
+  color:var(--text) !important;opacity:.95 !important;letter-spacing:.2px !important;
+}
+.loc1-addr span{font-size:16px !important;font-weight:500 !important;opacity:.85 !important;}
+.loc1-time{font-weight:500 !important;}
+
+/* Itinerario */
+.itv4-label{font-size:16px !important;font-weight:600 !important;letter-spacing:1.4px !important;color:var(--dark) !important;}
+.itv4-time{font-weight:600 !important;}
+
+/* Familia */
+.fam2-role{font-size:12px !important;font-weight:600 !important;opacity:1 !important;}
+.fam2-names{font-size:20px !important;font-weight:600 !important;line-height:1.5 !important;}
+
+/* Calendario / album / regalos */
+.cal-c p{font-size:18px !important;font-weight:500 !important;}
+.album-text{font-size:17px !important;font-weight:500 !important;color:rgba(255,247,247,.92) !important;}
+.env-desc{font-size:16px !important;font-weight:500 !important;color:var(--text) !important;opacity:.88 !important;}
+.env-tap-hint{font-size:12px !important;font-weight:600 !important;opacity:.85 !important;}
+
+/* RSVP — dato critico */
+.rsvp-text-jen{font-size:18px !important;font-weight:500 !important;color:var(--text) !important;opacity:.92 !important;line-height:1.7 !important;}
+.rsvp-deadline-jen{font-weight:600 !important;}
+.rsvp-input{font-size:16px !important;font-weight:500 !important;}
+.rsvp-toggle-btn{font-size:14px !important;font-weight:600 !important;}
+.btn-rsvp span,.btn-rsvp{font-size:14px !important;}
+
+/* Botones "Como llegar" — accion principal */
+.btn{font-size:14px !important;font-weight:700 !important;letter-spacing:2.4px !important;}
+
+/* Parrafos de intro y secciones */
+.intro-text{font-weight:500 !important;font-size:18px !important;}
+.eyebrow{font-size:13px !important;font-weight:600 !important;}
+.credit{font-size:12px !important;font-weight:500 !important;color:rgba(44,24,32,.62) !important;}
+.fd{font-size:14px !important;font-weight:500 !important;}
+#rsvp-feedback{font-size:16px !important;font-weight:500 !important;}
+#rsvp-pases-note{font-size:16px !important;font-weight:500 !important;}
 </style>
 </head>
 <body>
