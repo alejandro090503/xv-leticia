@@ -1173,15 +1173,119 @@ body{font-weight:500;font-size:18px;}
 /* separador de la lista de padrinos */
 .fam2-sep{display:block;color:var(--silver);font-size:15px;line-height:1.9;opacity:.75;}
 
+
+/* ==========================================================================
+   SELECTOR DE IDIOMA — primera pantalla, antes del sobre
+   ========================================================================== */
+#lang-screen{
+  position:fixed;inset:0;z-index:10002;
+  display:flex;align-items:center;justify-content:center;padding:26px;
+  background:#fff4f5;
+  background-image:
+    repeating-linear-gradient(45deg,transparent 0 28px,rgba(183,110,121,.035) 28px 29px),
+    repeating-linear-gradient(-45deg,transparent 0 28px,rgba(255,222,226,.05) 28px 29px);
+  opacity:0;animation:langIn .9s ease-out .15s forwards;
+}
+@keyframes langIn{to{opacity:1;}}
+#lang-screen.is-gone{opacity:0;pointer-events:none;transition:opacity .7s ease;}
+.lang-card{
+  width:100%;max-width:340px;text-align:center;
+  padding:40px 26px 34px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(183,110,121,.22);
+  border-radius:6px;
+  box-shadow:0 20px 60px rgba(109,58,76,.14);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.lang-orn{width:190px;height:auto;margin:0 auto 22px;display:block;}
+.lang-mono{
+  font-family:'Great Vibes',cursive;font-size:56px;line-height:1;
+  background:linear-gradient(135deg,#8d4a57 0%,#B76E79 30%,#f3cdd0 50%,#B76E79 70%,#8d4a57 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:2px;
+}
+.lang-name{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
+  font-size:14px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--dark);opacity:.75;margin-bottom:30px;
+}
+.lang-q{
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  font-size:19px;line-height:1.4;color:var(--text);margin-bottom:24px;
+}
+.lang-q span{
+  display:block;margin-top:5px;
+  font-style:italic;font-weight:500;font-size:15px;color:var(--dark);opacity:.68;
+}
+.lang-btns{display:flex;flex-direction:column;gap:12px;}
+.lang-btn{
+  width:100%;padding:15px 18px;cursor:pointer;
+  border:1px solid rgba(183,110,121,.42);border-radius:40px;
+  background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,222,226,.5));
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.lang-btn:hover,.lang-btn:focus-visible{
+  transform:translateY(-2px);
+  border-color:var(--gold);
+  box-shadow:0 10px 26px rgba(183,110,121,.24);
+  outline:none;
+}
+.lang-btn:active{transform:translateY(0);}
+.lang-btn-main{
+  display:block;
+  font-family:'Cormorant Garamond',serif;font-weight:700;
+  font-size:17px;letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--dark);
+}
+.lang-btn-sub{
+  display:block;margin-top:3px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+  font-size:13px;letter-spacing:1.5px;color:var(--gold);opacity:.9;
+}
+/* mientras se elige idioma, el sobre espera oculto */
+#envelope-screen.is-waiting{opacity:0 !important;}
+
 </style>
 </head>
 <body>
+
+
+<!-- SELECTOR DE IDIOMA -->
+<div id="lang-screen" role="dialog" aria-label="Elige tu idioma / Choose your language">
+  <div class="lang-card">
+    <svg class="lang-orn" viewBox="0 0 220 34" fill="none" aria-hidden="true">
+      <line x1="0" y1="17" x2="72" y2="17" stroke="var(--gold)" stroke-width=".8" opacity=".38"/>
+      <path d="M72 17 Q82 6 92 17" stroke="var(--gold)" stroke-width=".9" fill="none" opacity=".5"/>
+      <path d="M110 5 L121 17 L110 29 L99 17 Z" fill="rgba(183,110,121,.10)" stroke="var(--gold)" stroke-width="1" opacity=".55"/>
+      <circle cx="110" cy="17" r="3.4" fill="rgba(238,195,199,.28)" stroke="var(--gold)" stroke-width=".7" opacity=".6"/>
+      <path d="M128 17 Q138 6 148 17" stroke="var(--gold)" stroke-width=".9" fill="none" opacity=".5"/>
+      <line x1="148" y1="17" x2="220" y2="17" stroke="var(--gold)" stroke-width=".8" opacity=".38"/>
+    </svg>
+
+    <div class="lang-mono">LG</div>
+    <div class="lang-name">Leticia</div>
+
+    <p class="lang-q">Elige tu idioma<span>Choose your language</span></p>
+
+    <div class="lang-btns">
+      <button class="lang-btn" type="button" data-lang="es">
+        <span class="lang-btn-main">Espa&ntilde;ol</span>
+        <span class="lang-btn-sub">Continuar</span>
+      </button>
+      <button class="lang-btn" type="button" data-lang="en">
+        <span class="lang-btn-main">English</span>
+        <span class="lang-btn-sub">Continue</span>
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ENVELOPE -->
 <div id="envelope-screen" role="button" aria-label="Toca para abrir tu invitacion">
   <img id="env-image" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/sobre.png" alt="Invitaci&oacute;n de Leticia">
   <video id="env-video" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/apertura.mp4" playsinline webkit-playsinline muted preload="auto"></video>
-  <p class="envelope-hint" id="env-hint">Toca para abrir</p>
+  <p class="envelope-hint" id="env-hint" data-en="Tap to open">Toca para abrir</p>
 </div>
 <div id="env-flash"></div>
 <canvas id="sakura-canvas" aria-hidden="true"></canvas>
@@ -1189,7 +1293,7 @@ body{font-weight:500;font-size:18px;}
 <!-- LOADER -->
 <div id="loader">
   <div class="ld-name" id="ldName"></div>
-  <div class="ld-tag" id="ldTag">Sus XV A&ntilde;os &middot; 7 Noviembre 2026</div>
+  <div class="ld-tag" id="ldTag" data-en="Her Quincea&ntilde;era &middot; November 7, 2026">Sus XV A&ntilde;os &middot; 7 Noviembre 2026</div>
 </div>
 
 <div class="wrap" style="visibility:hidden">
@@ -1201,7 +1305,7 @@ body{font-weight:500;font-size:18px;}
     <div class="hero-bottom">
 
       <!-- Eyebrow superior -->
-      <div class="hero-eyebrow" id="hEy">MIS XV A&Ntilde;OS</div>
+      <div class="hero-eyebrow" id="hEy" data-en="MY QUINCEA&Ntilde;ERA">MIS XV A&Ntilde;OS</div>
 
       <!-- Frame dorado esquinas -->
       <div class="hero-frame" id="hFrame">
@@ -1214,18 +1318,18 @@ body{font-weight:500;font-size:18px;}
       <h1 class="hero-name" id="hNm">Leticia</h1>
       <div class="hero-sub" id="hSb">
         <span class="xv-num">XV</span>
-        <span class="xv-anos">A&ntilde;os</span>
+        <span class="xv-anos" data-en="Years">A&ntilde;os</span>
       </div>
 
       <!-- Fecha bajo el nombre -->
       <div class="hero-date-line" id="hDate">
         <span class="hero-date-bar"></span>
-        <span class="hero-date-text">7 · Noviembre · 2026</span>
+        <span class="hero-date-text" data-en="7 · November · 2026">7 · Noviembre · 2026</span>
         <span class="hero-date-bar"></span>
       </div>
 
       <!-- Ciudad -->
-      <div class="hero-city" id="hCity">Easton, Maryland</div>
+      <div class="hero-city" id="hCity" data-en="Easton, Maryland">Easton, Maryland</div>
 
     </div>
   </section>
@@ -1237,7 +1341,7 @@ body{font-weight:500;font-size:18px;}
   <div class="fecha-sec rv">
     <div class="fecha-line">
       <div class="fl-bar"></div>
-      <div class="fecha-txt">7 &middot; Noviembre &middot; 2026</div>
+      <div class="fecha-txt" data-en="7 &middot; November &middot; 2026">7 &middot; Noviembre &middot; 2026</div>
       <div class="fl-bar right"></div>
     </div>
   </div>
@@ -1246,12 +1350,12 @@ body{font-weight:500;font-size:18px;}
   <section style="padding:0;" id="sintro" class="bgsec">
     <div class="intro-wrap rv">
       <p class="intro-salmo">
-        <span class="intro-salmo-ref">Salmos 37:4</span>
-        &ldquo;Del&eacute;itate en el Se&ntilde;or,<br>
-        y &Eacute;l te conceder&aacute; las peticiones de tu coraz&oacute;n.&rdquo;
+        <span class="intro-salmo-ref" data-en="Psalm 37:4">Salmos 37:4</span>
+        <span data-en="&ldquo;Take delight in the Lord,<br>and He will give you the desires of your heart.&rdquo;">&ldquo;Del&eacute;itate en el Se&ntilde;or,<br>
+        y &Eacute;l te conceder&aacute; las peticiones de tu coraz&oacute;n.&rdquo;</span>
       </p>
 
-      <p class="intro-text"><span class="intro-drop">C</span>on el coraz&oacute;n lleno de ilusi&oacute;n y una
+      <p class="intro-text" data-en="<span class=&quot;intro-drop&quot;>W</span>ith a heart full of excitement and a smile I can&rsquo;t hide, a day I have dreamed of since I was little is finally here. A day surrounded by love, warm hugs and moments I will keep forever.<br><br>Today I want you to be part of this joy, and to celebrate my fifteenth birthday with me &mdash; the beginning of a new chapter full of dreams to chase."><span class="intro-drop">C</span>on el coraz&oacute;n lleno de ilusi&oacute;n y una
         sonrisa que no puedo ocultar, llega un d&iacute;a que so&ntilde;&eacute; desde ni&ntilde;a. Un d&iacute;a
         rodeado de amor, abrazos sinceros y momentos que se quedar&aacute;n guardados para siempre.<br><br>
         Hoy quiero que seas parte de esta alegr&iacute;a tan especial y que celebremos juntos mis quince a&ntilde;os,
@@ -1266,7 +1370,7 @@ body{font-weight:500;font-size:18px;}
     <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-intro.jpg?v=2" alt="Leticia entre los cerezos en flor" loading="lazy"></div>
-    <span class="ph-cap">Quince primaveras</span>
+    <span class="ph-cap" data-en="Fifteen springs">Quince primaveras</span>
   </div>
   </section>
 
@@ -1287,7 +1391,7 @@ body{font-weight:500;font-size:18px;}
 
   <!-- COUNTDOWN -->
   <section id="scd">
-    <h2 class="sec-title rv">Cuenta Regresiva</h2>
+    <h2 class="sec-title rv" data-en="Countdown">Cuenta Regresiva</h2>
     <div class="cd2-container">
       <div class="cd2-grid">
         <div class="cd2-unit cd2-rv">
@@ -1297,7 +1401,7 @@ body{font-weight:500;font-size:18px;}
               <circle class="cd2-ring-glow" cx="60" cy="60" r="50" stroke="#b4798e" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" data-ring="d"/>
               <circle class="cd2-ring-progress" cx="60" cy="60" r="50" stroke="#b4798e" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" data-ring="d"/>
             </svg>
-            <div class="cd2-value"><div class="cd2-num" id="cdD">000</div><div class="cd2-lbl">D&iacute;as</div></div>
+            <div class="cd2-value"><div class="cd2-num" id="cdD">000</div><div class="cd2-lbl" data-en="Days">D&iacute;as</div></div>
           </div>
         </div>
         <div class="cd2-unit cd2-rv">
@@ -1307,7 +1411,7 @@ body{font-weight:500;font-size:18px;}
               <circle class="cd2-ring-glow" cx="60" cy="60" r="50" stroke="#c6a9ad" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" data-ring="h"/>
               <circle class="cd2-ring-progress" cx="60" cy="60" r="50" stroke="#c6a9ad" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" data-ring="h"/>
             </svg>
-            <div class="cd2-value"><div class="cd2-num" id="cdH">00</div><div class="cd2-lbl">Horas</div></div>
+            <div class="cd2-value"><div class="cd2-num" id="cdH">00</div><div class="cd2-lbl" data-en="Hours">Horas</div></div>
           </div>
         </div>
         <div class="cd2-unit cd2-rv">
@@ -1317,7 +1421,7 @@ body{font-weight:500;font-size:18px;}
               <circle class="cd2-ring-glow" cx="60" cy="60" r="50" stroke="#ffdee2" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" data-ring="m"/>
               <circle class="cd2-ring-progress" cx="60" cy="60" r="50" stroke="#ffdee2" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" data-ring="m"/>
             </svg>
-            <div class="cd2-value"><div class="cd2-num" id="cdM">00</div><div class="cd2-lbl">Minutos</div></div>
+            <div class="cd2-value"><div class="cd2-num" id="cdM">00</div><div class="cd2-lbl" data-en="Minutes">Minutos</div></div>
           </div>
         </div>
         <div class="cd2-unit cd2-rv">
@@ -1327,12 +1431,12 @@ body{font-weight:500;font-size:18px;}
               <circle class="cd2-ring-glow" cx="60" cy="60" r="50" stroke="#B76E79" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" data-ring="s"/>
               <circle class="cd2-ring-progress" cx="60" cy="60" r="50" stroke="#B76E79" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" data-ring="s"/>
             </svg>
-            <div class="cd2-value"><div class="cd2-num" id="cdS">00</div><div class="cd2-lbl">Segundos</div></div>
+            <div class="cd2-value"><div class="cd2-num" id="cdS">00</div><div class="cd2-lbl" data-en="Seconds">Segundos</div></div>
           </div>
         </div>
       </div>
       <div class="cd2-quote">
-        <p>Cada segundo m&aacute;s cerca de este d&iacute;a tan especial</p>
+        <p data-en="Every second brings us closer to this special day">Cada segundo m&aacute;s cerca de este d&iacute;a tan especial</p>
       </div>
     </div>
   </section>
@@ -1359,7 +1463,7 @@ body{font-weight:500;font-size:18px;}
     <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-ancha.jpg" alt="Leticia sentada en las escaleras bajo los cerezos en flor" loading="lazy"></div>
-    <span class="ph-cap">Bajo los cerezos</span>
+    <span class="ph-cap" data-en="Under the cherry blossoms">Bajo los cerezos</span>
   </div>
 
 
@@ -1367,29 +1471,29 @@ body{font-weight:500;font-size:18px;}
   <section class="date-hero" id="dateHero">
     <div class="dh-glow" aria-hidden="true"></div>
     <div class="dh-inner">
-      <div class="date-eyebrow">Reserva esta fecha</div>
-      <h2 class="date-h">Mi <em>gran</em> d&iacute;a</h2>
+      <div class="date-eyebrow" data-en="Save the date">Reserva esta fecha</div>
+      <h2 class="date-h" data-en="My <em>big</em> day">Mi <em>gran</em> d&iacute;a</h2>
 
       <div class="date-numbers">
         <div class="date-block">
           <div class="date-num" data-count-from="1" data-count-to="7">1</div>
-          <div class="date-lbl">Noviembre</div>
+          <div class="date-lbl" data-en="November">Noviembre</div>
         </div>
         <div class="date-block">
           <div class="date-num" data-count-from="2011" data-count-to="2026">2011</div>
-          <div class="date-lbl">S&aacute;bado</div>
+          <div class="date-lbl" data-en="Saturday">S&aacute;bado</div>
         </div>
       </div>
 
-      <div class="date-roman">07 &middot; 11 &middot; 2026</div>
-      <p class="date-note">De la ni&ntilde;a que fui a la mujer que soy &middot; quince a&ntilde;os de camino</p>
+      <div class="date-roman" data-en="11 &middot; 07 &middot; 2026">07 &middot; 11 &middot; 2026</div>
+      <p class="date-note" data-en="From the girl I was to the woman I am &middot; fifteen years of the journey">De la ni&ntilde;a que fui a la mujer que soy &middot; quince a&ntilde;os de camino</p>
     </div>
   </section>
 
   <!-- UBICACION — Dos venues distintos -->
   <section id="subic" class="bgsec">
-    <div class="eyebrow eyebrow-gold rv">D&oacute;nde celebraremos</div>
-    <h2 class="sec-title rv">Ubicaci&oacute;n</h2>
+    <div class="eyebrow eyebrow-gold rv" data-en="Where we celebrate">D&oacute;nde celebraremos</div>
+    <h2 class="sec-title rv" data-en="Location">Ubicaci&oacute;n</h2>
     <div class="loc-grid">
 
       <!-- Misa de XV -->
@@ -1398,14 +1502,14 @@ body{font-weight:500;font-size:18px;}
           <div class="loc1-pin">
             <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
           </div>
-          <div class="loc1-label">Misa de XV A&ntilde;os</div>
+          <div class="loc1-label" data-en="Quincea&ntilde;era Mass">Misa de XV A&ntilde;os</div>
           <div class="loc1-time">1:00 <span style="font-size:18px;letter-spacing:3px;">PM</span></div>
           <div class="loc1-addr">Saints Peter and Paul<br>Catholic Church<br><span style="font-size:14px;opacity:.72;">1214 S Washington St<br>Easton, MD 21601</span></div>
           <div class="loc1-hsep"></div>
         </div>
         <div class="loc1-cta">
           <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Saints+Peter+and+Paul+Catholic+Church+1214+S+Washington+St+Easton+MD+21601" target="_blank" rel="noopener">
-            C&oacute;mo Llegar
+            <span data-en="Get Directions">C&oacute;mo Llegar</span>
           </a>
         </div>
       </div>
@@ -1416,14 +1520,14 @@ body{font-weight:500;font-size:18px;}
           <div class="loc1-pin">
             <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
           </div>
-          <div class="loc1-label">Recepci&oacute;n</div>
+          <div class="loc1-label" data-en="Reception">Recepci&oacute;n</div>
           <div class="loc1-time">4:00 <span style="font-size:18px;letter-spacing:3px;">PM</span></div>
-          <div class="loc1-addr">2000 Hambrooks Blvd<br><span style="font-size:14px;opacity:.72;">Cambridge, MD 21613</span></div>
+          <div class="loc1-addr" data-en="Reception Hall<br><span style=&quot;font-size:14px;opacity:.72;&quot;>2000 Hambrooks Blvd<br>Cambridge, MD 21613</span>">2000 Hambrooks Blvd<br><span style="font-size:14px;opacity:.72;">Cambridge, MD 21613</span></div>
           <div class="loc1-hsep"></div>
         </div>
         <div class="loc1-cta">
           <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=2000+Hambrooks+Blvd+Cambridge+MD+21613" target="_blank" rel="noopener">
-            C&oacute;mo Llegar
+            <span data-en="Get Directions">C&oacute;mo Llegar</span>
           </a>
         </div>
       </div>
@@ -1433,10 +1537,10 @@ body{font-weight:500;font-size:18px;}
 
   <!-- CALENDAR -->
   <section class="rv cal-c" id="scal">
-    <div class="eyebrow">No lo olvides</div>
-    <h2 class="sec-title">Gu&aacute;rdalo</h2>
-    <p>Agrega el evento a tu calendario para no olvidarlo</p>
-    <a class="btn" id="gcalBtn" href="#" target="_blank">A&ntilde;adir a Google Calendar</a>
+    <div class="eyebrow" data-en="Don&rsquo;t forget">No lo olvides</div>
+    <h2 class="sec-title" data-en="Save it">Gu&aacute;rdalo</h2>
+    <p data-en="Add the event to your calendar so it doesn&rsquo;t slip by">Agrega el evento a tu calendario para no olvidarlo</p>
+    <a class="btn" id="gcalBtn" href="#" target="_blank" data-en="Add to Google Calendar">A&ntilde;adir a Google Calendar</a>
   </section>
 
   <div class="orn rv">
@@ -1461,13 +1565,13 @@ body{font-weight:500;font-size:18px;}
     <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-vestido.jpg?v=2" alt="Detalle del vestido de Leticia" loading="lazy"></div>
-    <span class="ph-cap">El gran d&iacute;a</span>
+    <span class="ph-cap" data-en="The big day">El gran d&iacute;a</span>
   </div>
 
   <!-- ITINERARIO — Cards con iconos ilustrados -->
   <section id="siti">
-    <div class="eyebrow eyebrow-gold rv">Programa del D&iacute;a</div>
-    <h2 class="sec-title rv">Itinerario</h2>
+    <div class="eyebrow eyebrow-gold rv" data-en="Schedule of the Day">Programa del D&iacute;a</div>
+    <h2 class="sec-title rv" data-en="Itinerary">Itinerario</h2>
     <div class="itv4">
 
       <!-- Misa -->
@@ -1485,7 +1589,7 @@ body{font-weight:500;font-size:18px;}
         </div>
         <div class="itv4-info">
           <div class="itv4-time">1:00 PM</div>
-          <div class="itv4-label">Misa de XV A&ntilde;os</div>
+          <div class="itv4-label" data-en="Quincea&ntilde;era Mass">Misa de XV A&ntilde;os</div>
         </div>
       </div>
 
@@ -1503,7 +1607,7 @@ body{font-weight:500;font-size:18px;}
         </div>
         <div class="itv4-info">
           <div class="itv4-time">4:00 PM</div>
-          <div class="itv4-label">Recepci&oacute;n</div>
+          <div class="itv4-label" data-en="Reception">Recepci&oacute;n</div>
         </div>
       </div>
 
@@ -1528,10 +1632,10 @@ body{font-weight:500;font-size:18px;}
   <!-- DRESS CODE — fondo claro, siluetas de moda -->
   <section class="dc-section rv" id="sdc">
     <div class="eyebrow eyebrow-gold rv">Dress Code</div>
-    <h2 class="dc-title rv">Formal</h2>
+    <h2 class="dc-title rv" data-en="Formal">Formal</h2>
 
     <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;letter-spacing:1px;line-height:1.6;color:var(--text);margin-top:14px;opacity:.82;">
-      C&oacute;digo de vestimenta<br><em style="color:var(--dark);">por confirmar</em>
+      <span data-en="Dress code<br><em style=&quot;color:var(--dark);&quot;>to be confirmed</em>">C&oacute;digo de vestimenta<br><em style="color:var(--dark);">por confirmar</em></span>
     </p>
     <div class="dc-hairline"></div>
   </section>
@@ -1553,8 +1657,8 @@ body{font-weight:500;font-size:18px;}
 
   <!-- FAMILIA -->
   <section id="sfam" class="bgsec">
-    <div class="eyebrow eyebrow-gold rv">Con la Bendici&oacute;n de</div>
-    <h2 class="sec-title rv">Mi Familia</h2>
+    <div class="eyebrow eyebrow-gold rv" data-en="With the Blessing of">Con la Bendici&oacute;n de</div>
+    <h2 class="sec-title rv" data-en="My Family">Mi Familia</h2>
 
   <div class="ph rv">
     <svg class="ph-corner ph-c-tl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
@@ -1569,7 +1673,7 @@ body{font-weight:500;font-size:18px;}
         <div class="fam2-medallion">
           <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
-        <div class="fam2-role">Mis Padres</div>
+        <div class="fam2-role" data-en="My Parents">Mis Padres</div>
         <div class="fam2-names">
           Ronald Garcia
           <span class="fam2-amp">&amp;</span>
@@ -1592,7 +1696,7 @@ body{font-weight:500;font-size:18px;}
         <div class="fam2-medallion" style="background:linear-gradient(135deg,rgba(198,169,173,0.14),rgba(231,208,211,0.26));border-color:rgba(198,169,173,0.32);">
           <svg viewBox="0 0 24 24" style="stroke:var(--silver)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
-        <div class="fam2-role" style="color:var(--silver)">Mis Padrinos</div>
+        <div class="fam2-role" style="color:var(--silver)" data-en="My Godparents">Mis Padrinos</div>
         <div class="fam2-names">
           Raquel Marin
           <span class="fam2-sep">&middot;</span>
@@ -1640,8 +1744,8 @@ body{font-weight:500;font-size:18px;}
 
   <!-- GALERIA — rueda 3D arrastrable -->
   <section id="sgal">
-    <div class="eyebrow eyebrow-gold rv">Entre Flores de Cerezo</div>
-    <h2 class="sec-title rv">Mi Sesi&oacute;n</h2>
+    <div class="eyebrow eyebrow-gold rv" data-en="Among the Cherry Blossoms">Entre Flores de Cerezo</div>
+    <h2 class="sec-title rv" data-en="My Photo Session">Mi Sesi&oacute;n</h2>
     <div class="wheel-scene rv" id="wheel-scene">
       <div class="wheel-ring" id="wheel-ring">
           <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-1.jpg?v=2" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
@@ -1652,7 +1756,7 @@ body{font-weight:500;font-size:18px;}
           <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/wheel-6.jpg?v=2" alt="Leticia &mdash; sesi&oacute;n de XV a&ntilde;os"></div>
       </div>
     </div>
-    <p class="wgal-hint">Arrastra para girar</p>
+    <p class="wgal-hint" data-en="Drag to spin">Arrastra para girar</p>
   </section>
 
   <div class="orn rv">
@@ -1672,8 +1776,8 @@ body{font-weight:500;font-size:18px;}
 
   <!-- ALBUM — OBLIGATORIA -->
   <section class="rv" id="salbum">
-    <div class="eyebrow eyebrow-gold rv">Comparte el Momento</div>
-    <h2 class="sec-title sec-title-gold rv">&Aacute;lbum Compartido</h2>
+    <div class="eyebrow eyebrow-gold rv" data-en="Share the Moment">Comparte el Momento</div>
+    <h2 class="sec-title sec-title-gold rv" data-en="Shared Album">&Aacute;lbum Compartido</h2>
     <div class="album-card rv">
       <div class="album-icon">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -1682,11 +1786,11 @@ body{font-weight:500;font-size:18px;}
           <polyline points="21 15 16 10 5 21"/>
         </svg>
       </div>
-      <div class="album-title">Fotos &amp; Recuerdos</div>
+      <div class="album-title" data-en="Photos &amp; Memories">Fotos &amp; Recuerdos</div>
       <p class="album-text">
-        Despu&eacute;s del evento, sube tus fotos y videos<br>
+        <span data-en="After the party, upload your photos and videos<br>to the shared album. It will be our<br>collective memory of this special day.">Despu&eacute;s del evento, sube tus fotos y videos<br>
         al &aacute;lbum compartido. Ser&aacute; nuestro<br>
-        recuerdo colectivo de este d&iacute;a tan especial.
+        recuerdo colectivo de este d&iacute;a tan especial.</span>
       </p>
       <!-- PENDIENTE: reemplazar ALBUM_LINK en el JS con el link real del álbum — el QR se actualiza automáticamente -->
       <div class="album-qr" id="albumQrWrap">
@@ -1697,7 +1801,7 @@ body{font-weight:500;font-size:18px;}
           style="width:172px;height:172px;border-radius:10px;display:block;">
       </div>
       <a class="btn" id="albumBtn" href="#" style="background:linear-gradient(135deg,var(--gold),#9c5663);" onclick="return false;">
-        Ver &Aacute;lbum
+        <span data-en="View Album">Ver &Aacute;lbum</span>
       </a>
     </div>
   </section>
@@ -1724,12 +1828,12 @@ body{font-weight:500;font-size:18px;}
     <svg class="ph-corner ph-c-bl" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <svg class="ph-corner ph-c-br" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M1 25 L1 1 L25 1" stroke="var(--gold)" stroke-width="1.1" opacity=".72"/><path d="M5 25 L5 5 L25 5" stroke="var(--gold)" stroke-width=".6" opacity=".38"/><circle cx="1" cy="1" r="2" fill="var(--gold)" opacity=".6"/></svg>
     <div class="ph-inner"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/xv-leticia/foto-cierre.jpg?v=2" alt="Leticia sentada bajo el cerezo en flor" loading="lazy"></div>
-    <span class="ph-cap">Te espero</span>
+    <span class="ph-cap" data-en="I&rsquo;ll be waiting for you">Te espero</span>
   </div>
 
   <!-- RSVP -->
   <section class="rv bgsec" id="srsvp">
-    <div class="eyebrow eyebrow-silver">Conf&iacute;rmanos tu Asistencia</div>
+    <div class="eyebrow eyebrow-silver" data-en="Please Confirm Your Attendance">Conf&iacute;rmanos tu Asistencia</div>
     <h2 class="sec-title rv">R.S.V.P.</h2>
     <div class="rsvp-card rv">
       <!-- Esquinas decorativas doradas -->
@@ -1753,11 +1857,11 @@ body{font-weight:500;font-size:18px;}
           </g>
         </svg>
 
-        <div class="eyebrow eyebrow-silver">Conf&iacute;rmanos tu Asistencia</div>
-        <h2 class="rsvp-title-jen">Tu presencia <em>lo es todo</em></h2>
+        <div class="eyebrow eyebrow-silver" data-en="Please Confirm Your Attendance">Conf&iacute;rmanos tu Asistencia</div>
+        <h2 class="rsvp-title-jen" data-en="Your presence <em>means everything</em>">Tu presencia <em>lo es todo</em></h2>
         <p class="rsvp-text-jen">
-          Conf&iacute;rmanos tu asistencia.<br>
-          Con mucho gusto te esperamos.
+          <span data-en="Please let us know if you can join us.<br>We would love to have you there.">Conf&iacute;rmanos tu asistencia.<br>
+          Con mucho gusto te esperamos.</span>
         </p>
 
         <div class="rsvp-divider-jen">
@@ -1766,19 +1870,19 @@ body{font-weight:500;font-size:18px;}
 
         <p id="rsvp-pases-note" style="display:none"></p>
         <div class="rsvp-pases-display" id="rsvp-pases-display" style="display:none">
-          <span class="rsvp-pases-label">Pases</span>
+          <span class="rsvp-pases-label" data-en="Guests">Pases</span>
           <span class="rsvp-pases-num" id="rsvp-pases-num">1</span>
         </div>
 
         <div class="rsvp-toggle">
-          <button class="rsvp-toggle-btn" id="btnYes" type="button">Asistiré</button>
-          <button class="rsvp-toggle-btn" id="btnNo" type="button">No podré asistir</button>
+          <button class="rsvp-toggle-btn" id="btnYes" type="button" data-en="I&rsquo;ll be there">Asistiré</button>
+          <button class="rsvp-toggle-btn" id="btnNo" type="button" data-en="I can&rsquo;t make it">No podré asistir</button>
         </div>
 
         <div class="rsvp-fields" id="rsvp-fields" style="display:none"></div>
 
         <button class="btn-rsvp" id="rsvpBtn" type="button">
-          <span id="rsvp-btn-text">Confirmar Asistencia</span>
+          <span id="rsvp-btn-text" data-en="Confirm Attendance">Confirmar Asistencia</span>
         </button>
 
         <p id="rsvp-feedback"></p>
@@ -1791,9 +1895,9 @@ body{font-weight:500;font-size:18px;}
   <!-- FOOTER — OBLIGATORIA -->
   <footer>
     <div class="fn">Leticia</div>
-    <div class="fd">7 &middot; Noviembre &middot; 2026 &middot; Easton, Maryland</div>
+    <div class="fd" data-en="7 &middot; November &middot; 2026 &middot; Easton, Maryland">7 &middot; Noviembre &middot; 2026 &middot; Easton, Maryland</div>
     <div style="width:50px;height:1px;margin:18px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.4;"></div>
-    <p class="credit">Dise&ntilde;o por <a href="https://instagram.com/elysium.invitaciones" target="_blank" rel="noopener">@elysium.invitaciones</a></p>
+    <p class="credit"><span data-en="Designed by">Dise&ntilde;o por</span> <a href="https://instagram.com/elysium.invitaciones" target="_blank" rel="noopener">@elysium.invitaciones</a></p>
   </footer>
 
 </div><!-- /wrap -->
@@ -1831,6 +1935,41 @@ body{font-weight:500;font-size:18px;}
 <script>
 window.scrollTo(0,0);
 history.scrollRestoration='manual';
+
+/* ===== IDIOMA ES/EN =====================================================
+   Cada nodo con data-en guarda su ES original en data-es la primera vez.
+   applyLang() solo intercambia innerHTML, asi que se puede ir y volver. */
+window.LANG='es';
+function applyLang(lang){
+  window.LANG=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    if(el.dataset.es===undefined) el.dataset.es=el.innerHTML;
+    el.innerHTML = (lang==='en') ? el.dataset.en : el.dataset.es;
+  });
+  if(window.applyRsvpLang) window.applyRsvpLang(lang);
+  if(window.applyCalLang)  window.applyCalLang(lang);
+  try{ localStorage.setItem('xvleticia_lang',lang); }catch(e){}
+}
+
+(function(){
+  var scr=document.getElementById('lang-screen');
+  var env=document.getElementById('envelope-screen');
+  if(!scr||!env) return;
+  env.classList.add('is-waiting');           /* el sobre espera detras */
+
+  function choose(lang){
+    applyLang(lang);
+    scr.classList.add('is-gone');
+    setTimeout(function(){ scr.style.display='none'; },750);
+    env.classList.remove('is-waiting');
+    if(window.startEnvelopeIntro) window.startEnvelopeIntro();
+  }
+  scr.querySelectorAll('.lang-btn').forEach(function(b){
+    b.addEventListener('click',function(){ choose(b.dataset.lang); });
+  });
+})();
+
 gsap.registerPlugin(ScrollTrigger);
 
 /* ENVELOPE */
@@ -1842,9 +1981,12 @@ gsap.registerPlugin(ScrollTrigger);
   var opened=false;
   var invitationReady=false;
 
-  gsap.timeline()
-    .to(envScreen,{opacity:1,duration:1.2,ease:'power2.out',delay:0.3})
-    .to(hint,{opacity:1,duration:0.9,ease:'power2.out'},'-=0.5');
+  /* la intro del sobre arranca cuando el invitado elige idioma */
+  window.startEnvelopeIntro=function(){
+    gsap.timeline()
+      .to(envScreen,{opacity:1,duration:1.2,ease:'power2.out',delay:0.15})
+      .to(hint,{opacity:1,duration:0.9,ease:'power2.out'},'-=0.5');
+  };
 
   function revealInvitation(){
     if(invitationReady)return;
@@ -2049,11 +2191,20 @@ function initScrollReveal(){
 
 /* GOOGLE CALENDAR */
 (function(){
-  var t=encodeURIComponent('XV Años de Leticia');
-  var d=encodeURIComponent('Misa de XV Años: 1:00 PM — Saints Peter and Paul Catholic Church, Easton MD | Recepción: 4:00 PM — 2000 Hambrooks Blvd, Cambridge MD');
+  var TXT={
+    es:{t:'XV Años de Leticia',
+        d:'Misa de XV Años: 1:00 PM — Saints Peter and Paul Catholic Church, Easton MD | Recepción: 4:00 PM — 2000 Hambrooks Blvd, Cambridge MD'},
+    en:{t:'Leticia\u2019s Quinceañera',
+        d:'Quinceañera Mass: 1:00 PM — Saints Peter and Paul Catholic Church, Easton MD | Reception: 4:00 PM — 2000 Hambrooks Blvd, Cambridge MD'}
+  };
   var l=encodeURIComponent('1214 S Washington St, Easton, MD 21601');
-  document.getElementById('gcalBtn').href=
-    'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+t+'&dates=20261107T180000Z/20261108T020000Z&details='+d+'&location='+l;
+  window.applyCalLang=function(lang){
+    var x=TXT[lang]||TXT.es;
+    document.getElementById('gcalBtn').href=
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(x.t)+
+      '&dates=20261107T180000Z/20261108T020000Z&details='+encodeURIComponent(x.d)+'&location='+l;
+  };
+  window.applyCalLang('es');
 })();
 
 /* RSVP — PANEL INTEGRATION */
@@ -2071,6 +2222,30 @@ function initScrollReveal(){
 
   var rsvpChoice     = null;
   var savedNames     = [];
+  /* textos que el JS escribe en caliente; se re-aplican al cambiar de idioma */
+  var RT={
+    es:{para:'Esta invitación es para ',
+        tuNombre:'Tu nombre completo', invitado:'Invitado ',
+        confirmar:'Confirmar Asistencia', actualizar:'Actualizar respuesta', enviando:'Enviando…',
+        yaConf:'¡Ya tienes confirmada tu asistencia! Puedes actualizar tu respuesta.',
+        yaNo:'Ya tienes registrado que no podrás asistir. Puedes cambiar tu respuesta.',
+        elige:'Por favor selecciona si asistirás o no.',
+        unNombre:'Por favor escribe al menos un nombre.',
+        okSi:'¡Tu asistencia ha sido confirmada! Nos vemos pronto.',
+        okNo:'Hemos registrado que no podrás asistir. ¡Gracias por avisarnos!',
+        err:'Error de conexión. Intenta de nuevo.'},
+    en:{para:'This invitation is for ',
+        tuNombre:'Your full name', invitado:'Guest ',
+        confirmar:'Confirm Attendance', actualizar:'Update response', enviando:'Sending…',
+        yaConf:'You are already confirmed! You can still update your response.',
+        yaNo:'We have you down as unable to attend. You can change your response.',
+        elige:'Please choose whether you will attend.',
+        unNombre:'Please write at least one name.',
+        okSi:'Your attendance is confirmed! See you soon.',
+        okNo:'We have noted that you cannot attend. Thank you for letting us know!',
+        err:'Connection error. Please try again.'}
+  };
+  function L(){ return RT[window.LANG||'es'] || RT.es; }
   var noteEl         = document.getElementById('rsvp-pases-note');
   var pasesDisplayEl = document.getElementById('rsvp-pases-display');
   var pasesNumEl     = document.getElementById('rsvp-pases-num');
@@ -2083,7 +2258,7 @@ function initScrollReveal(){
   if(!confirmBtn || !btnYes) return;
 
   if (urlPara) {
-    noteEl.textContent = 'Esta invitación es para ' + urlPara;
+    noteEl.textContent = L().para + urlPara;
     noteEl.style.display = 'block';
     // Bloqueamos el toggle mientras pedimos al panel el número real de pases
     pasesNumEl.textContent = '…';
@@ -2098,7 +2273,7 @@ function initScrollReveal(){
       var inp = document.createElement('input');
       inp.type = 'text';
       inp.className = 'rsvp-input';
-      inp.placeholder = n === 1 ? 'Tu nombre completo' : 'Invitado ' + (i + 1);
+      inp.placeholder = n === 1 ? L().tuNombre : L().invitado + (i + 1);
       inp.autocomplete = 'off';
       inp.maxLength = 60;
       inp.value = savedNames[i] || '';
@@ -2121,6 +2296,16 @@ function initScrollReveal(){
       fieldsEl.innerHTML = '';
     }
   }
+
+  window.applyRsvpLang = function(){
+    if (urlPara && noteEl.style.display === 'block') noteEl.textContent = L().para + urlPara;
+    if (rsvpChoice === 'yes') renderFields(pasesAsignados);
+    if (btnText.textContent) {
+      var otro = (window.LANG==='en') ? RT.es : RT.en;
+      if (btnText.textContent === otro.confirmar)  btnText.textContent = L().confirmar;
+      if (btnText.textContent === otro.actualizar) btnText.textContent = L().actualizar;
+    }
+  };
 
   btnYes.addEventListener('click', function(){ selectRsvp('yes'); });
   btnNo.addEventListener('click',  function(){ selectRsvp('no');  });
@@ -2148,10 +2333,8 @@ function initScrollReveal(){
             savedNames = d.nombres_confirmados.slice();
           }
           selectRsvp(d.estado === 'confirmado' ? 'yes' : 'no');
-          btnText.textContent = 'Actualizar respuesta';
-          feedbackEl.textContent = d.estado === 'confirmado'
-            ? '¡Ya tienes confirmada tu asistencia! Puedes actualizar tu respuesta.'
-            : 'Ya tienes registrado que no podrás asistir. Puedes cambiar tu respuesta.';
+          btnText.textContent = L().actualizar;
+          feedbackEl.textContent = d.estado === 'confirmado' ? L().yaConf : L().yaNo;
         }
       })
       .catch(function(){
@@ -2174,7 +2357,7 @@ function initScrollReveal(){
     if (frozen) return;
     if (!rsvpChoice) {
       feedbackEl.style.color = '#b0526a';
-      feedbackEl.textContent = 'Por favor selecciona si asistirás o no.';
+      feedbackEl.textContent = L().elige;
       return;
     }
     var nombres = [];
@@ -2186,11 +2369,11 @@ function initScrollReveal(){
       }
       if (nombres.length === 0) {
         feedbackEl.style.color = '#b0526a';
-        feedbackEl.textContent = 'Por favor escribe al menos un nombre.';
+        feedbackEl.textContent = L().unNombre;
         return;
       }
     }
-    btnText.textContent = 'Enviando…';
+    btnText.textContent = L().enviando;
     confirmBtn.disabled = true;
     feedbackEl.textContent = '';
     feedbackEl.style.color = '';
@@ -2207,18 +2390,16 @@ function initScrollReveal(){
     })
     .then(function(r){ return r.json(); })
     .then(function(){
-      btnText.textContent = 'Actualizar respuesta';
+      btnText.textContent = L().actualizar;
       confirmBtn.disabled = false;
       feedbackEl.style.color = '';
-      feedbackEl.textContent = rsvpChoice === 'yes'
-        ? '¡Tu asistencia ha sido confirmada! Nos vemos pronto.'
-        : 'Hemos registrado que no podrás asistir. ¡Gracias por avisarnos!';
+      feedbackEl.textContent = rsvpChoice === 'yes' ? L().okSi : L().okNo;
     })
     .catch(function(){
-      btnText.textContent = 'Confirmar Asistencia';
+      btnText.textContent = L().confirmar;
       confirmBtn.disabled = false;
       feedbackEl.style.color = '#b0526a';
-      feedbackEl.textContent = 'Error de conexión. Intenta de nuevo.';
+      feedbackEl.textContent = L().err;
     });
   });
 })();
