@@ -1246,6 +1246,32 @@ body{font-weight:500;font-size:18px;}
 /* mientras se elige idioma, el sobre espera oculto */
 #envelope-screen.is-waiting{opacity:0 !important;}
 
+
+/* ==========================================================================
+   CALENDARIO — Google + Apple/.ics
+   ========================================================================== */
+.cal-btns{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:12px;
+  margin:4px auto 0;max-width:340px;
+}
+.cal-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-width:150px;flex:1 1 auto;
+}
+.cal-btn--alt{
+  background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(255,222,226,.62)) !important;
+  color:var(--dark) !important;
+  border:1px solid rgba(183,110,121,.48);
+  box-shadow:0 6px 20px rgba(183,110,121,.16);
+}
+.cal-ico{width:17px;height:17px;flex:0 0 auto;}
+.cal-hint{
+  max-width:32ch;margin:18px auto 0;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-weight:500 !important;font-size:15px !important;line-height:1.55;
+  color:var(--text);opacity:.72;
+}
+
 </style>
 </head>
 <body>
@@ -1486,7 +1512,7 @@ body{font-weight:500;font-size:18px;}
       </div>
 
       <div class="date-roman" data-en="11 &middot; 07 &middot; 2026">07 &middot; 11 &middot; 2026</div>
-      <p class="date-note" data-en="From the girl I was to the woman I am &middot; fifteen years of the journey">De la ni&ntilde;a que fui a la mujer que soy &middot; quince a&ntilde;os de camino</p>
+      <p class="date-note" data-en="Fifteen years of beautiful memories,<br>with so many dreams and goals yet to come true. &#127800;">Quince a&ntilde;os de hermosos recuerdos,<br>con toda una vida de sue&ntilde;os y metas a&uacute;n por cumplir. &#127800;</p>
     </div>
   </section>
 
@@ -1540,7 +1566,28 @@ body{font-weight:500;font-size:18px;}
     <div class="eyebrow" data-en="Don&rsquo;t forget">No lo olvides</div>
     <h2 class="sec-title" data-en="Save it">Gu&aacute;rdalo</h2>
     <p data-en="Add the event to your calendar so it doesn&rsquo;t slip by">Agrega el evento a tu calendario para no olvidarlo</p>
-    <a class="btn" id="gcalBtn" href="#" target="_blank" data-en="Add to Google Calendar">A&ntilde;adir a Google Calendar</a>
+
+    <div class="cal-btns">
+      <a class="btn cal-btn" id="gcalBtn" href="#" target="_blank" rel="noopener">
+        <svg class="cal-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M3 9.5h18" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="12" cy="15" r="2.2" fill="currentColor" opacity=".55"/>
+        </svg>
+        <span data-en="Google Calendar">Google Calendar</span>
+      </a>
+
+      <a class="btn cal-btn cal-btn--alt" id="icsBtn" href="/evento.ics" download="xv-leticia.ics">
+        <svg class="cal-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M16.2 12.6c0-2 1.6-3 1.7-3.05-.93-1.36-2.38-1.55-2.9-1.57-1.23-.13-2.4.72-3.03.72-.62 0-1.59-.7-2.62-.68-1.35.02-2.59.78-3.28 1.98-1.4 2.43-.36 6.03 1 8 .67.96 1.46 2.04 2.5 2 1-.04 1.38-.65 2.59-.65s1.55.65 2.61.63c1.08-.02 1.76-.98 2.42-1.95.76-1.11 1.07-2.19 1.09-2.25-.02-.01-2.09-.8-2.08-3.18Z" fill="currentColor"/>
+          <path d="M14.3 6.6c.55-.67.92-1.6.82-2.53-.79.03-1.75.53-2.32 1.2-.51.58-.96 1.53-.84 2.43.88.07 1.79-.45 2.34-1.1Z" fill="currentColor"/>
+        </svg>
+        <span data-en="Apple &middot; iPhone">Apple &middot; iPhone</span>
+      </a>
+    </div>
+
+    <p class="cal-hint" data-en="Google opens in your browser. The Apple button downloads the event &mdash; open it and your phone will add it (also works with Outlook).">El bot&oacute;n de Google abre tu navegador. El de Apple descarga el evento &mdash; &aacute;brelo y tu tel&eacute;fono lo agrega solo (tambi&eacute;n sirve para Outlook).</p>
   </section>
 
   <div class="orn rv">
@@ -2189,22 +2236,47 @@ function initScrollReveal(){
   }});
 })();
 
-/* GOOGLE CALENDAR */
+/* CALENDARIO — Google Calendar + Apple/.ics ================================
+   El 7 de noviembre de 2026 Maryland ya esta en EST (UTC-5), asi que
+   1:00 PM local = 18:00 UTC. El .ics lleva su VTIMEZONE, asi que el invitado
+   ve la hora correcta este donde este. */
 (function(){
+  var gcal = document.getElementById('gcalBtn');
+  var ics  = document.getElementById('icsBtn');
+  if(!gcal) return;
+
   var TXT={
     es:{t:'XV Años de Leticia',
-        d:'Misa de XV Años: 1:00 PM — Saints Peter and Paul Catholic Church, Easton MD | Recepción: 4:00 PM — 2000 Hambrooks Blvd, Cambridge MD'},
+        d:'Misa de XV Años: 1:00 PM — Saints Peter and Paul Catholic Church, 1214 S Washington St, Easton MD 21601\n\nRecepción: 4:00 PM — 2000 Hambrooks Blvd, Cambridge MD 21613\n\nInvitación: https://xv-leticia.vercel.app',
+        ics:'/evento.ics'},
     en:{t:'Leticia\u2019s Quinceañera',
-        d:'Quinceañera Mass: 1:00 PM — Saints Peter and Paul Catholic Church, Easton MD | Reception: 4:00 PM — 2000 Hambrooks Blvd, Cambridge MD'}
+        d:'Quinceañera Mass: 1:00 PM — Saints Peter and Paul Catholic Church, 1214 S Washington St, Easton MD 21601\n\nReception: 4:00 PM — 2000 Hambrooks Blvd, Cambridge MD 21613\n\nInvitation: https://xv-leticia.vercel.app',
+        ics:'/event.ics'}
   };
-  var l=encodeURIComponent('1214 S Washington St, Easton, MD 21601');
+  var LOC = encodeURIComponent('Saints Peter and Paul Catholic Church, 1214 S Washington St, Easton, MD 21601');
+
   window.applyCalLang=function(lang){
-    var x=TXT[lang]||TXT.es;
-    document.getElementById('gcalBtn').href=
-      'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(x.t)+
-      '&dates=20261107T180000Z/20261108T020000Z&details='+encodeURIComponent(x.d)+'&location='+l;
+    var x = TXT[lang] || TXT.es;
+    gcal.href =
+      'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text='     + encodeURIComponent(x.t) +
+      '&dates=20261107T180000Z/20261108T030000Z' +
+      '&details='  + encodeURIComponent(x.d) +
+      '&location=' + LOC +
+      '&ctz=America/New_York';
+    if(ics) ics.href = x.ics;
   };
   window.applyCalLang('es');
+
+  /* En iOS, <a download> no siempre dispara: navegamos al .ics directo para
+     que Safari lo entregue al Calendario. */
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if(ics && isIOS){
+    ics.removeAttribute('download');
+    ics.setAttribute('target','_blank');
+    ics.setAttribute('rel','noopener');
+  }
 })();
 
 /* RSVP — PANEL INTEGRATION */

@@ -1,0 +1,60 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Elysium Invitaciones//XV Leticia//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:America/New_York
+X-LIC-LOCATION:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:mass-xv-leticia-20261107@xv-leticia.vercel.app
+DTSTAMP:20260927T120000Z
+DTSTART;TZID=America/New_York:20261107T130000
+DTEND;TZID=America/New_York:20261107T143000
+SUMMARY:Leticia's Quinceanera Mass
+DESCRIPTION:Leticia's Quinceanera Mass.\nThe reception starts at 4:00 PM at
+ 2000 Hambrooks Blvd\, Cambridge\, MD 21613.\n\nInvitation: https://xv-letic
+ ia.vercel.app
+LOCATION:Saints Peter and Paul Catholic Church\, 1214 S Washington St\, East
+ on\, MD 21601
+URL:https://xv-leticia.vercel.app
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Leticia's Quinceanera is tomorrow
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:reception-xv-leticia-20261107@xv-leticia.vercel.app
+DTSTAMP:20260927T120000Z
+DTSTART;TZID=America/New_York:20261107T160000
+DTEND;TZID=America/New_York:20261107T220000
+SUMMARY:Reception - Leticia's Quinceanera
+DESCRIPTION:Reception for Leticia's Quinceanera.\n\nInvitation: https://xv-l
+ eticia.vercel.app
+LOCATION:2000 Hambrooks Blvd\, Cambridge\, MD 21613
+URL:https://xv-leticia.vercel.app
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-PT2H
+ACTION:DISPLAY
+DESCRIPTION:Leticia's reception starts in 2 hours
+END:VALARM
+END:VEVENT
+END:VCALENDAR
