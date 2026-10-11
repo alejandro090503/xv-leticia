@@ -649,7 +649,12 @@ section{padding:64px 26px;}
   font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;font-weight:400;
   color:rgba(255,248,246,0.70);line-height:1.75;margin-bottom:22px;
 }
-.album-qr{
+.album-qr{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px}
+.album-qr.bloqueado .album-qr-frame img{filter:blur(7px);opacity:.75}
+.album-qr.bloqueado .btn{pointer-events:none;opacity:.45}
+.album-aviso{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;font-weight:500;color:rgba(255,247,247,.85);line-height:1.7;margin-top:18px}
+.album-qr:not(.bloqueado) + .album-aviso{display:none}
+.album-qr-frame{
   /* QR grande y visible */
   width:180px;height:180px;border-radius:16px;margin:0 auto 22px;
   background:#fff;
@@ -1861,7 +1866,7 @@ body{font-weight:500;font-size:18px;}
   <!-- ALBUM — OBLIGATORIA -->
   <section class="rv" id="salbum">
     <div class="eyebrow eyebrow-gold rv" data-en="Share the Moment">Comparte el Momento</div>
-    <h2 class="sec-title sec-title-gold rv" data-en="Shared Album">&Aacute;lbum Compartido</h2>
+    <h2 class="sec-title sec-title-gold rv" data-en="Photo album">&Aacute;lbum de fotos</h2>
     <div class="album-card rv">
       <div class="album-icon">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -1872,21 +1877,19 @@ body{font-weight:500;font-size:18px;}
       </div>
       <div class="album-title" data-en="Photos &amp; Memories">Fotos &amp; Recuerdos</div>
       <p class="album-text">
-        <span data-en="After the party, upload your photos and videos<br>to the shared album. It will be our<br>collective memory of this special day.">Despu&eacute;s del evento, sube tus fotos y videos<br>
-        al &aacute;lbum compartido. Ser&aacute; nuestro<br>
-        recuerdo colectivo de este d&iacute;a tan especial.</span>
+        <span data-en="Help us keep every moment: upload here the photos you take during the event.">Ay&uacute;danos a guardar cada momento: sube aqu&iacute; las fotos que tomes durante el evento.</span>
       </p>
-      <!-- PENDIENTE: reemplazar ALBUM_LINK en el JS con el link real del álbum — el QR se actualiza automáticamente -->
-      <div class="album-qr" id="albumQrWrap">
-        <!-- QR grande — apunta a xv-leticia.vercel.app hasta que se confirme el link del álbum -->
-        <img id="albumQrImg"
-          src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fxv-leticia.vercel.app&size=172x172&color=2e1f1a&bgcolor=ffffff&margin=6&qzone=1&ecc=M"
-          alt="QR &aacute;lbum compartido"
-          style="width:172px;height:172px;border-radius:10px;display:block;">
+      <!-- Álbum de Elysium: el QR abre /album → panel-invitados.vercel.app/subir/xv-leticia -->
+      <div class="album-qr" data-fecha="2026-11-07">
+        <div class="album-qr-frame" id="albumQrWrap">
+          <img id="albumQrImg" src="qr-album.png" alt="C&oacute;digo QR del &aacute;lbum de fotos" width="172" height="172"
+            style="width:172px;height:172px;border-radius:10px;display:block;">
+        </div>
+        <a class="btn" id="albumBtn" href="/album" style="background:linear-gradient(135deg,var(--gold),#9c5663);">
+          <span data-en="Upload my photos">Subir mis fotos</span>
+        </a>
       </div>
-      <a class="btn" id="albumBtn" href="#" style="background:linear-gradient(135deg,var(--gold),#9c5663);" onclick="return false;">
-        <span data-en="View Album">Ver &Aacute;lbum</span>
-      </a>
+      <p class="album-aviso" data-en="The photo album opens on the day of the event. Come back here and upload all your photos from the night &#10024;">El &aacute;lbum de fotos se habilita el d&iacute;a del evento. Regresa aqu&iacute; y sube todas tus fotos de la noche &#10024;</p>
     </div>
   </section>
 
@@ -2994,20 +2997,13 @@ function initWheelGallery(){
   },{passive:false});
 })();
 
-/* ALBUM — QR dinámico */
+/* ALBUM — se desbloquea solo el día del evento (la base además rechaza fotos antes de tiempo) */
 (function(){
-  /* PENDIENTE: cuando el cliente proporcione el link del álbum, reemplazar esta URL */
-  var ALBUM_LINK=''; /* ← pegar aquí el link del álbum cuando llegue */
-  var qrImg=document.getElementById('albumQrImg');
-  var albumBtn=document.getElementById('albumBtn');
-  if(ALBUM_LINK&&qrImg){
-    /* Actualiza el QR con el link real */
-    qrImg.src='https://api.qrserver.com/v1/create-qr-code/?data='+encodeURIComponent(ALBUM_LINK)+'&size=172x172&color=2e1f1a&bgcolor=ffffff&margin=6&qzone=1&ecc=M';
-  }
-  if(ALBUM_LINK&&albumBtn){
-    albumBtn.href=ALBUM_LINK;
-    albumBtn.removeAttribute('onclick');
-  }
+  var box=document.querySelector('.album-qr');
+  if(!box) return;
+  var p=box.dataset.fecha.split('-');
+  var abre=new Date(+p[0],+p[1]-1,+p[2],0,0,0);
+  if(new Date()<abre) box.classList.add('bloqueado');
 })();
 
 /* RSVP — animaciones estilo jennifer */
