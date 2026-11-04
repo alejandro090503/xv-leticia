@@ -27,7 +27,7 @@ DTSTAMP:20260927T120000Z
 DTSTART;TZID=America/New_York:20261107T130000
 DTEND;TZID=America/New_York:20261107T143000
 SUMMARY:Leticia's Quinceanera Mass
-DESCRIPTION:Leticia's Quinceanera Mass.\nThe reception starts at 4:00 PM at
+DESCRIPTION:Leticia's Quinceanera Mass.\nThe reception starts at 4:30 PM at
  2000 Hambrooks Blvd\, Cambridge\, MD 21613.\n\nInvitation: https://xv-letic
  ia.vercel.app
 LOCATION:Saints Peter and Paul Catholic Church\, 1214 S Washington St\, East
@@ -43,7 +43,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:reception-xv-leticia-20261107@xv-leticia.vercel.app
 DTSTAMP:20260927T120000Z
-DTSTART;TZID=America/New_York:20261107T160000
+DTSTART;TZID=America/New_York:20261107T163000
 DTEND;TZID=America/New_York:20261107T220000
 SUMMARY:Reception - Leticia's Quinceanera
 DESCRIPTION:Reception for Leticia's Quinceanera.\n\nInvitation: https://xv-l

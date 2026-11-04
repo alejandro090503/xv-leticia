@@ -27,7 +27,7 @@ DTSTAMP:20260927T120000Z
 DTSTART;TZID=America/New_York:20261107T130000
 DTEND;TZID=America/New_York:20261107T143000
 SUMMARY:Misa de XV Años de Leticia
-DESCRIPTION:Misa de XV Años de Leticia.\nLa recepción es a las 4:00 PM en 2
+DESCRIPTION:Misa de XV Años de Leticia.\nLa recepción es a las 4:30 PM en 2
  000 Hambrooks Blvd\, Cambridge\, MD 21613.\n\nInvitación: https://xv-letici
  a.vercel.app
 LOCATION:Saints Peter and Paul Catholic Church\, 1214 S Washington St\, East
@@ -43,7 +43,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:recepcion-xv-leticia-20261107@xv-leticia.vercel.app
 DTSTAMP:20260927T120000Z
-DTSTART;TZID=America/New_York:20261107T160000
+DTSTART;TZID=America/New_York:20261107T163000
 DTEND;TZID=America/New_York:20261107T220000
 SUMMARY:Recepción · XV Años de Leticia
 DESCRIPTION:Recepción de los XV Años de Leticia.\n\nInvitación: https://xv-l
